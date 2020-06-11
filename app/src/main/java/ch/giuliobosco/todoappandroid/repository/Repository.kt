@@ -1,0 +1,53 @@
+package ch.giuliobosco.todoappandroid.repository
+
+import ch.giuliobosco.todoappandroid.model.BasicTask
+import ch.giuliobosco.todoappandroid.model.Login
+import ch.giuliobosco.todoappandroid.model.responses.*
+import ch.giuliobosco.todoappandroid.network.TodoAPPapi
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+
+object Repository {
+    private val client by lazy { TodoAPPapi.create() }
+
+    fun login(username: String, password:String): Observable<LoginTokenResponse> {
+        val data = Login(username, password)
+        return client.login(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun register(username:String, password: String):Observable<BasicResponse> {
+        val data = Login(username, password)
+        return client.register(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun getAllTask(): Observable<TaskListResponse> {
+        return client.getAllTask()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun createTask(title:String, description:String) :Observable<TaskCreatedResponse> {
+        val data = BasicTask(title, description)
+        return client.createTask(data)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun updateTask(id: Int, title:String, description :String):Observable<TaskUpdateResponse> {
+        val data = BasicTask(title, description)
+        return client.update(data, id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    fun deleteTask(id: Int) : Observable<TaskDeleteResponse> {
+        return client.delete(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+}
