@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import ch.giuliobosco.todoappandroid.R
+import ch.giuliobosco.todoappandroid.ui.task.TaskActivity
 import ch.giuliobosco.todoappandroid.util.MySharedPreferences
 import ch.giuliobosco.todoappandroid.util.Validator
 import ch.giuliobosco.todoappandroid.util.color
@@ -50,7 +51,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
     private fun checkLoginToken() {
         val token = MySharedPreferences.getToken()
         if (!token!!.isEmpty()) {
-            val intent = Intent(this, TasksActivity::class.java)
+            val intent = Intent(this, TaskActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -65,7 +66,7 @@ class LoginActivity : AppCompatActivity(), LoginView {
     }
 
     override fun onSuccess() {
-        val intent = Intent(this, TasksActivity::class.java)
+        val intent = Intent(this, TaskActivity::class.java)
         startActivity(intent)
         finish()
     }
