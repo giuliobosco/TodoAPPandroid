@@ -2,11 +2,11 @@ package ch.giuliobosco.todoappandroid.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import ch.giuliobosco.todoappandroid.GoTodo
+import ch.giuliobosco.todoappandroid.TodoAPP
 
 object MySharedPreferences {
     private val sharedPreferences: SharedPreferences =
-        GoTodo.applicationContext()
+        TodoAPP.applicationContext()
             .getSharedPreferences(SHARED_PREFERENCE_FILE, Context.MODE_PRIVATE)
 
     fun getToken(): String? =

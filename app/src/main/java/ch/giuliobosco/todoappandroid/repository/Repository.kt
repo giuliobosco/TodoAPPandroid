@@ -3,13 +3,13 @@ package ch.giuliobosco.todoappandroid.repository
 import ch.giuliobosco.todoappandroid.model.BasicTask
 import ch.giuliobosco.todoappandroid.model.Login
 import ch.giuliobosco.todoappandroid.model.responses.*
-import ch.giuliobosco.todoappandroid.network.GoTodoAPI
+import ch.giuliobosco.todoappandroid.network.TodoAPPapi
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 object Repository {
-    private val client by lazy { GoTodoAPI.create() }
+    private val client by lazy { TodoAPPapi.create() }
 
     fun login(username: String, password: String): Observable<LoginTokenResponse> {
         val data = Login(username, password)

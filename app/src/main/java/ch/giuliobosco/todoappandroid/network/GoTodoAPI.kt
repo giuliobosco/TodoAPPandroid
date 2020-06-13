@@ -1,7 +1,7 @@
 package ch.giuliobosco.todoappandroid.network
 
 import android.content.Intent
-import ch.giuliobosco.todoappandroid.GoTodo
+import ch.giuliobosco.todoappandroid.TodoAPP
 import ch.giuliobosco.todoappandroid.model.BasicTask
 import ch.giuliobosco.todoappandroid.model.Login
 import ch.giuliobosco.todoappandroid.model.responses.*
@@ -16,7 +16,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-interface GoTodoAPI {
+interface TodoAPPapi {
     @Headers("No-Authentication: true")
     @POST("/v1/login")
     fun login(@Body login: Login) : Observable<LoginTokenResponse>
@@ -38,7 +38,7 @@ interface GoTodoAPI {
     fun delete(@Path("id") id: Int) : Observable<TaskDeleteResponse>
 
     companion object {
-        fun create(): GoTodoAPI {
+        fun create(): TodoAPPapi {
             val client: OkHttpClient = OkHttpClient.Builder()
                 .addInterceptor {
                     val header= it.request().header("No-Authentication")
@@ -57,11 +57,11 @@ interface GoTodoAPI {
                 .addInterceptor{
                     val request = it.request()
                     val response = it.proceed(request)
-                    val intent = Intent(GoTodo.applicationContext(), LoginActivity::class.java)
+                    val intent = Intent(TodoAPP.applicationContext(), LoginActivity::class.java)
                     if (request.header("No-Authentication") == null) {
                         when (response.code()) {
                             401 -> {
-                                GoTodo.applicationContext().startActivity(intent)
+                                TodoAPP.applicationContext().startActivity(intent)
                                 MySharedPreferences.clearToken()
                             }
                         }
@@ -77,7 +77,7 @@ interface GoTodoAPI {
                 .baseUrl(BASE_URL)
                 .build()
 
-            return retrofit.create(GoTodoAPI::class.java)
+            return retrofit.create(TodoAPPapi::class.java)
         }
     }
 }
